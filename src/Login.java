@@ -2,9 +2,9 @@
  * Created by eselta on 12/4/15.
  */
 public class Login {
-    private static final String medarbejderPassword = "correcthorsebatterystaple";
-    private static final String medarbejderBrugernavn = "Goblin";
-    private static final String chefPassword = "qwe"; // bøddel
+    private static final String medarbejderPassword = "qweqwe";
+    private static final String medarbejderBrugernavn = "qweqwe";
+    private static final String chefPassword = "qwe"; // bÃ¸ddel
     private static final String chefBrugernavn = "qwe"; // Fenger
 
     public int validerLogin(String b, String p){
