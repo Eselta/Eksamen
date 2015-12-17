@@ -14,6 +14,9 @@ import java.util.regex.Pattern;
  */
 public class CafeProgram extends Application
 {
+
+    private DBConnect connection = DBConnect.getInstance();
+
     public static void main(String[] args)
     {
         launch(args);
@@ -36,17 +39,9 @@ public class CafeProgram extends Application
         GridPane layout2 = new GridPane();
         Scene scene2 = new Scene(layout2, xAkse, yAkse);
 
-        // Layout og Scene til vagtskemaGUI
-        //GridPane layout3 = new GridPane();
-        //Scene scene3 = new Scene(layout3, xAkse, yAkse);
-
         // Layout og Scene til vagtoprettelseGUI
         GridPane layout4 = new GridPane();
         Scene scene4 = new Scene(layout4, xAkse, yAkse);
-
-        // Layout og Scene til vagtredigeringGUI
-        //GridPane layout5 = new GridPane();
-        //Scene scene5 = new Scene(layout5, xAkse, yAkse);
 
         // Layout og Scene til medarbejderoprettelseGUI
         GridPane layout6 = new GridPane();
@@ -89,7 +84,6 @@ public class CafeProgram extends Application
         scene1Hbox.getChildren().addAll(loginNavnFelt, loginPasswordFelt);
         scene1Hbox2.getChildren().add(loginKnap);
 
-        //layout1.setGridLinesVisible(true);
         layout1.setMinSize(xAkse, yAkse);
         layout1.setAlignment(Pos.CENTER);
         scene1Hbox.setAlignment(Pos.BOTTOM_CENTER);
@@ -97,7 +91,7 @@ public class CafeProgram extends Application
         layout1.add(scene1Hbox, 0, 0);
         layout1.add(scene1Hbox2, 0, 1);
 
-        //loginKnap rykket til bunden.
+        // LoginKnap rykket til bunden.
 
         // SLUT loginGUI (scene1)
 
@@ -123,8 +117,8 @@ public class CafeProgram extends Application
         Button redigerVagtKnap = new Button("Rediger Vagt");
         Button opretMedarbejderKnap = new Button("Opret Medarbejder");
         Button redigerMedarbejderKnap = new Button("Rediger Medarbejder");
-        Button opretLoentrinKnap = new Button("Opret L\u00F8ntrin");
-        Button redigerLoentrinKnap = new Button("Rediger L\u00F8ntrin");
+        Button opretLøntrinKnap = new Button("Opret L\u00F8ntrin");
+        Button redigerLøntrinKnap = new Button("Rediger L\u00F8ntrin");
 
         visVagtOversigtKnap.setPrefSize(192, 64);
         scene2Hbox2.setMargin(visVagtOversigtKnap, new Insets(64, 0, 0, 0));
@@ -134,15 +128,14 @@ public class CafeProgram extends Application
         scene2Hbox3.setMargin(redigerVagtKnap, new Insets(32, 0, 0, 0));
         opretMedarbejderKnap.setPrefSize(192, 64);
         redigerMedarbejderKnap.setPrefSize(192, 64);
-        opretLoentrinKnap.setPrefSize(192, 64);
-        redigerLoentrinKnap.setPrefSize(192, 64);
+        opretLøntrinKnap.setPrefSize(192, 64);
+        redigerLøntrinKnap.setPrefSize(192, 64);
 
         scene2Hbox.getChildren().add(scene2logUdKnap);
         scene2Hbox2.getChildren().add(visVagtOversigtKnap);
         scene2Hbox3.getChildren().addAll(opretVagtKnap, redigerVagtKnap);
-        scene2Hbox4.getChildren().addAll(opretMedarbejderKnap, redigerMedarbejderKnap, opretLoentrinKnap, redigerLoentrinKnap);
+        scene2Hbox4.getChildren().addAll(opretMedarbejderKnap, redigerMedarbejderKnap, opretLøntrinKnap, redigerLøntrinKnap);
 
-        //layout2.setGridLinesVisible(true);
         layout2.setMinSize(xAkse, yAkse);
         layout2.setPrefSize(xAkse, yAkse);
         layout2.setAlignment(Pos.CENTER);
@@ -163,26 +156,15 @@ public class CafeProgram extends Application
             loginPasswordFelt.clear();
             opretMedarbejderKnap.setDisable(false);
             redigerMedarbejderKnap.setDisable(false);
-            opretLoentrinKnap.setDisable(false);
-            redigerLoentrinKnap.setDisable(false);
+            opretLøntrinKnap.setDisable(false);
+            redigerLøntrinKnap.setDisable(false);
         });
 
-        /*
-        visVagtOversigtKnap.setOnAction((event) -> {
-            primaryStage.setScene(scene3);
-            primaryStage.show();
-        });
-        */
         opretVagtKnap.setOnAction((event) -> {
             primaryStage.setScene(scene4);
             primaryStage.show();
         });
-        /*
-        redigerVagtKnap.setOnAction((event) -> {
-            primaryStage.setScene(scene5);
-            primaryStage.show();
-        });
-        */
+
         opretMedarbejderKnap.setOnAction((event) -> {
             primaryStage.setScene(scene6);
             primaryStage.show();
@@ -193,24 +175,18 @@ public class CafeProgram extends Application
             primaryStage.show();
         });
 
-        opretLoentrinKnap.setOnAction((event) -> {
+        opretLøntrinKnap.setOnAction((event) -> {
             primaryStage.setScene(scene8);
             primaryStage.show();
         });
 
-        redigerLoentrinKnap.setOnAction((event) -> {
+        redigerLøntrinKnap.setOnAction((event) -> {
             primaryStage.setScene(scene9);
             primaryStage.show();
         });
 
         // SLUT funktionsoversigtGUI (scene2)
 
-        // START vagtskemaGUI (scene3)
-
-                // HER SKAL DER VÆRE TABLEVIEW MED MERE
-        //TODO
-
-        // SLUT vagtskemaGUI (scene3)
 
         // START vagtoprettelseGUI (scene4)
 
@@ -248,7 +224,6 @@ public class CafeProgram extends Application
         scene4Hbox.getChildren().addAll(scene4tilbageKnap, scene4logUdKnap);
         scene4Hbox2.getChildren().addAll(medarbejderCB, datoDP, vagtCB, scene4OpretKnap);
 
-        //layout4.setGridLinesVisible(true);
         layout4.setMinSize(xAkse, yAkse);
         layout4.setPrefSize(xAkse, yAkse);
         layout4.setAlignment(Pos.CENTER);
@@ -260,40 +235,39 @@ public class CafeProgram extends Application
         scene4tilbageKnap.setOnAction((event) -> {
             primaryStage.setScene(scene2);
             primaryStage.show();
+        });
+
+
+        scene4logUdKnap.setOnAction((event) -> {
+            primaryStage.setScene(scene1);
+            primaryStage.show();
+            loginNavnFelt.clear();
+            loginPasswordFelt.clear();
+            opretMedarbejderKnap.setDisable(false);
+            redigerMedarbejderKnap.setDisable(false);
+            opretLøntrinKnap.setDisable(false);
+            redigerLøntrinKnap.setDisable(false);
+        });
+
+
+
+        scene4OpretKnap.setOnAction((event) -> {
 
             if(medarbejderCB.getValue() != null) {
                 if(datoDP.getValue() != null) {
                     if(vagtCB.getValue() != null) {
 
                         System.out.println("Tillykke, alle felter er godkendt til oprettelse af vagt!");
-                        // Opret vagt - det vil sige foretag et SQL statement der indsætter de forskellige felter direkte ind i databasen
 
                     } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Vagttype er ikke valgt i drop-down menuen."); }
                 } else {  FejlMeddelelse.visFejlMeddelelse("Fejl: Dato er ikke valgt i kalender menuen."); }
             } else {FejlMeddelelse.visFejlMeddelelse("Fejl: Medarbejder er ikke valgt i drop-down menuen."); }
-        });
-
-        /*
-        scene4logUdKnap.setOnAction((event) -> {
-            // Kald en logud funktion her.
-        });
-        */
-
-        /*
-        scene4OpretKnap.setOnAction((event) -> {
-            // Valider alle informationer - er medarbejder valgt? Er dato valgt? Er vagttype valgt? Er medarbejderen ledig til at tage en vagt på det pågældende tidspunkt?
-            // Hvis ja, opret vagt (det vil sige foretag et SQL statement der opretter vagten direkte i databasen). Ellers vis fejlmeddelelse. ["a-Z"]+
 
         });
-        */
+
 
         // SLUT vagtoprettelseGUI (scene4)
 
-        // START vagtredigeringGUI (scene5)
-
-                // HER SKAL DER VÆRE TABLEVIEW MED MERE
-
-        // SLUT vagtredigeringGUI (scene5)
 
         // START medarbejderoprettelseGUI (scene6)
 
@@ -343,9 +317,9 @@ public class CafeProgram extends Application
         scene6TF6.setPrefSize(256, 32);
 
         ComboBox scene6CB1 = new ComboBox(); // Vælg stilling
-        scene6CB1.getItems().addAll("Test1", "Test2", "Test 3");
+        scene6CB1.getItems().addAll("Chef", "Tjener", "Køkken");
         ComboBox scene6CB2 = new ComboBox(); // Vælg løntrin
-        scene6CB2.getItems().addAll("Test1", "Test2", "Test 3");
+        scene6CB2.getItems().addAll(connection.hentLøntrin());
 
         scene6CB1.setPrefSize(256, 32);
         scene6CB2.setPrefSize(256, 32);
@@ -361,7 +335,7 @@ public class CafeProgram extends Application
         scene6Hbox5.getChildren().addAll(scene6CB1, scene6CB2);
         scene6Hbox6.getChildren().add(scene6OpretKnap);
 
-        //layout6.setGridLinesVisible(true);
+
         layout6.setMinSize(xAkse, yAkse);
         layout6.setPrefSize(xAkse, yAkse);
         layout6.setAlignment(Pos.CENTER);
@@ -381,6 +355,23 @@ public class CafeProgram extends Application
         scene6tilbageKnap.setOnAction((event) -> {
             primaryStage.setScene(scene2);
             primaryStage.show();
+});
+
+
+        scene6logUdKnap.setOnAction((event) -> {
+            primaryStage.setScene(scene1);
+            primaryStage.show();
+            loginNavnFelt.clear();
+            loginPasswordFelt.clear();
+            opretMedarbejderKnap.setDisable(false);
+            redigerMedarbejderKnap.setDisable(false);
+            opretLøntrinKnap.setDisable(false);
+            redigerLøntrinKnap.setDisable(false);
+        });
+
+
+
+        scene6OpretKnap.setOnAction((event) -> {
 
 
             if(!scene6TF1.getText().isEmpty() && scene6TF1.getText().length() < 21 && Pattern.matches("[\306\330\305\346\370\345\040a-zA-Z-]+", scene6TF1.getText())) {
@@ -392,8 +383,11 @@ public class CafeProgram extends Application
                                     if(scene6CB1.getValue() != null) {
                                         if(scene6CB2.getValue() != null)
                                         {
-                                            System.out.println("Tillykke, alle felter er godkendt!");
-                                            // Opret medarbejder - det vil sige foretag et SQL statement der indsætter de forskellige felter direkte ind i databasen
+                                            String tempStilling = scene6CB2.getValue().toString();
+                                            String tempLøn = scene6CB2.getValue().toString();
+                                            connection.opretMedarbejder(scene6TF1.getText(), scene6TF2.getText(), scene6TF3.getText(), scene6TF4.getText(), tempStilling, tempLøn, scene6TF5.getText(), scene6TF6.getText());
+                                            primaryStage.setScene(scene2);
+                                            primaryStage.show();
 
                                         } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Løntrin er ikke valgt i drop-down menuen."); }
                                     } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Stilling er ikke valgt i drop-down menuen."); }
@@ -403,25 +397,10 @@ public class CafeProgram extends Application
                     } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Adresse indtastet forkert. Feltet må kun indeholde bogstaver, mellemrum og tal, samt tegnene ,.-, og være maksimalt 80 karakterer lang."); }
                 } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Efternavn indtastet forkert. Feltet må kun indeholde bogstaver, mellemrum, samt bindestreg, og være maksimalt 50 karakterer lang."); }
             }  else { FejlMeddelelse.visFejlMeddelelse("Fejl: Fornavn indtastet forkert. Feltet må kun indeholde bogstaver, mellemrum, samt bindestreg, og være maksimalt 20 karakterer lang."); }
-        });
 
-        /*
-        scene6logUdKnap.setOnAction((event) -> {
-            // Kald en logud funktion her.
-        });
-        */
-
-        /*
-        scene6OpretKnap.setOnAction((event) -> {
-            // Valider alle informationer - er alle 6 felter indtastet, og opfylder de kravene for hvad der må stå i dem? Er stilling og løntrin valgt?
-            // Hvis ja, opret medarbejder (det vil sige foretag et SQL statement der opretter medarbejderen direkte i databasen). Ellers vis fejlmeddelelse.
-
-            Validerings pseudo-kode:
-
-            SE TILBAGE KNAPPEN!
 
         });
-        */
+
 
         // SLUT medarbejderoprettelseGUI (scene6)
 
@@ -470,10 +449,11 @@ public class CafeProgram extends Application
         scene7TF6.setPrefSize(256, 32);
 
         ComboBox scene7CB1 = new ComboBox(); // Vælg stilling
-        scene7CB1.getItems().addAll("Test1", "Test2", "Test 3");
+        scene7CB1.getItems().addAll("Chef", "Tjener", "Køkken");
         ComboBox scene7CB2 = new ComboBox(); // Vælg løntrin
-        scene7CB2.getItems().addAll("Test1", "Test2", "Test 3");
+        scene7CB2.getItems().addAll(connection.hentLøntrin());
         ComboBox scene7CB3 = new ComboBox(); // Vælg medarbejder
+        scene7CB3.getItems().addAll(connection.hentNavne());
 
         scene7CB1.setPrefSize(256, 32);
         scene7CB2.setPrefSize(256, 32);
@@ -518,6 +498,69 @@ public class CafeProgram extends Application
         scene7tilbageKnap.setOnAction((event) -> {
             primaryStage.setScene(scene2);
             primaryStage.show();
+            });
+
+
+        scene7logUdKnap.setOnAction((event) -> {
+           primaryStage.setScene(scene1);
+            primaryStage.show();
+            loginNavnFelt.clear();
+            loginPasswordFelt.clear();
+            opretMedarbejderKnap.setDisable(false);
+            redigerMedarbejderKnap.setDisable(false);
+            opretLøntrinKnap.setDisable(false);
+            redigerLøntrinKnap.setDisable(false);
+        });
+
+
+
+        scene7RedigerKnap.setOnAction((event) -> {
+            String valg = scene7CB3.getValue().toString();
+            String[] valgte = valg.split(" ");
+            String valgte1 = valgte[0];
+            String valgte2 = valgte[1];
+            String adresse = connection.hentadresse(valgte1, valgte2);
+            String tlf = connection.hentTelefonNr(valgte1, valgte2);
+            String regNr = connection.hentRegNr(valgte1, valgte2);
+            String kontoNr = connection.hentKontoNr(valgte1, valgte2);
+
+            scene7TF1.setText(valgte1);
+            scene7TF2.setText(valgte2);
+            scene7TF3.setText(adresse);
+            scene7TF4.setText(tlf);
+            scene7TF5.setText(regNr);
+            scene7TF6.setText(kontoNr);
+            scene7CB1.setValue(connection.hentStilling(valgte1, valgte2));
+
+
+        });
+
+
+
+        scene7SletKnap.setOnAction((event) -> {
+                if(scene7CB1.getValue() != null){
+                    String valg = scene7CB3.getValue().toString();
+                    String[] valgte = valg.split(" ");
+                    String valgte1 = valgte[0];
+                    String valgte2 = valgte[1];
+                    connection.sletMedarbejder(valgte1, valgte2);
+                    primaryStage.setScene(scene2);
+                    primaryStage.show();
+
+
+                }
+            });
+
+
+        scene7GodkendKnap.setOnAction(e->{
+            String fornavn = scene7TF1.getText();
+            String efternavn = scene7TF2.getText();
+            String adresse = scene7TF3.getText();
+            String tlfNr = scene7TF4.getText();
+            String regNr = scene7TF5.getText();
+            String kontoNr = scene7TF6.getText();
+            String stilling = scene7CB1.getValue().toString();
+            String løntrin = scene7CB2.getValue().toString();
 
             if(!scene7TF1.getText().isEmpty() && scene7TF1.getText().length() < 21 && Pattern.matches("[\306\330\305\346\370\345\040a-zA-Z-]+", scene7TF1.getText())) {
                 if (!scene7TF2.getText().isEmpty() && scene7TF2.getText().length() < 51 && Pattern.matches("[\306\330\305\346\370\345\040a-zA-Z-]+", scene7TF2.getText())) {
@@ -528,8 +571,10 @@ public class CafeProgram extends Application
                                     if(scene7CB1.getValue() != null) {
                                         if(scene7CB2.getValue() != null)
                                         {
-                                            System.out.println("Tillykke, alle felter er godkendt!");
-                                            // Rediger medarbejder - det vil sige foretag et SQL statement der indsætter de forskellige felter direkte ind i databasen
+
+                                            connection.redigerMedarbejder(fornavn, efternavn, adresse, tlfNr, stilling, løntrin, kontoNr, regNr);
+                                            primaryStage.setScene(scene2);
+                                            primaryStage.show();
 
                                         } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Løntrin er ikke valgt i drop-down menuen."); }
                                     } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Stilling er ikke valgt i drop-down menuen."); }
@@ -539,27 +584,9 @@ public class CafeProgram extends Application
                     } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Adresse indtastet forkert. Feltet må kun indeholde bogstaver, mellemrum og tal, samt tegnene ,.-, og være maksimalt 80 karakterer lang."); }
                 } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Efternavn indtastet forkert. Feltet må kun indeholde bogstaver, mellemrum, samt bindestreg, og være maksimalt 50 karakterer lang."); }
             }  else { FejlMeddelelse.visFejlMeddelelse("Fejl: Fornavn indtastet forkert. Feltet må kun indeholde bogstaver, mellemrum, samt bindestreg, og være maksimalt 20 karakterer lang."); }
-        });
 
-        /*
-        scene7logUdKnap.setOnAction((event) -> {
-            // Kald en logud funktion her.
-        });
-        */
 
-        /*
-        scene7RedigerKnap.setOnAction((event) -> {
-            // Er en medarbejder valgt?
-            // Hvis ja, indl�s data fra databasen ind i de nedenst�ende felter (Foretag et SQL statement der henter data ind og l�gger dem i de korrekte textfields og comboboxes). Ellers vis fejlmeddelelse.
         });
-        */
-
-        /*
-        scene7SletKnap.setOnAction((event) -> {
-            // Er en medarbejder valgt?
-            // Hvis ja, slet medarbejderen (Foretag et SQL statement der sletter medarbejderen i databasen). Vis fejlmeddelelse hvis noget g�r galt.
-        });
-        */
 
         // SLUT medarbejderredigeringGUI (scene7)
 
@@ -579,9 +606,6 @@ public class CafeProgram extends Application
         scene8logUdKnap.setPrefSize(96, 32);
         scene8Hbox.setMargin(scene8logUdKnap, new Insets(16, 0, 0, 0));
 
-        ComboBox scene8LoentrinCB = new ComboBox();
-        scene8LoentrinCB.getItems().addAll("Løntrin1", "Test2", "Test 3");
-
         TextField scene8VaerdiTF = new TextField();
         scene8VaerdiTF.setPromptText("Indtast v\u00E6rdi");
         TextField scene8NavnTF = new TextField();
@@ -589,20 +613,19 @@ public class CafeProgram extends Application
 
         Button scene8OpretKnap = new Button("Opret L\u00F8ntrin");
 
-        scene8LoentrinCB.setPrefSize(192, 32);
+
         scene8VaerdiTF.setPrefSize(192, 32);
         scene8NavnTF.setPrefSize(192, 32);
         scene8OpretKnap.setPrefSize(128, 32);
 
-        scene8Hbox2.setMargin(scene8LoentrinCB, new Insets(64, 0, 0, 0));
+
         scene8Hbox2.setMargin(scene8VaerdiTF, new Insets(64, 0, 0, 0));
         scene8Hbox2.setMargin(scene8NavnTF, new Insets(64, 0, 0, 0));
         scene8Hbox2.setMargin(scene8OpretKnap, new Insets(64, 0, 0, 0));
 
         scene8Hbox.getChildren().addAll(scene8tilbageKnap, scene8logUdKnap);
-        scene8Hbox2.getChildren().addAll(scene8LoentrinCB, scene8VaerdiTF, scene8NavnTF, scene8OpretKnap);
+        scene8Hbox2.getChildren().addAll(scene8VaerdiTF, scene8NavnTF, scene8OpretKnap);
 
-        //layout8.setGridLinesVisible(true);
         layout8.setMinSize(xAkse, yAkse);
         layout8.setPrefSize(xAkse, yAkse);
         layout8.setAlignment(Pos.CENTER);
@@ -615,23 +638,29 @@ public class CafeProgram extends Application
             primaryStage.setScene(scene2);
             primaryStage.show();
 
-            if(scene8LoentrinCB.getValue() != null) {
-                if (!scene8VaerdiTF.getText().isEmpty() && scene8VaerdiTF.getText().length() < 5 && Pattern.matches("[0-9]+", scene8VaerdiTF.getText()))  {
-                    if (!scene8NavnTF.getText().isEmpty() && scene8NavnTF.getText().length() < 21 && Pattern.matches("[\306\330\305\346\370\345\040a-zA-Z0-9]+", scene8NavnTF.getText())) {
-
-                        System.out.println("Tillykke, alle felter er godkendt til oprettelse af løntrin!");
-                        // Opret løntrin - det vil sige foretag et SQL statement der indsætter de forskellige felter direkte ind i databasen
-
-                    } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Identifikationsnavn til løntrin indtastet forkert. Feltet må kun indeholde bogstaver, tal og mellemrum, og være maksimalt 20 karakterer lang."); }
-                } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Værdien til løntrin indtastet forkert. Feltet må kun indeholde tal, og være maksimalt 4 cifre."); }
-            } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Løntype er ikke valgt i drop-down menuen."); }
         });
 
-        /*
+
         scene8logUdKnap.setOnAction((event) -> {
-            // Kald en logud funktion her.
+            primaryStage.setScene(scene1);
+            primaryStage.show();
+            loginNavnFelt.clear();
+            loginPasswordFelt.clear();
+            opretMedarbejderKnap.setDisable(false);
+            redigerMedarbejderKnap.setDisable(false);
+            opretLøntrinKnap.setDisable(false);
+            redigerLøntrinKnap.setDisable(false);
         });
-        */
+
+
+        scene8OpretKnap.setOnAction(e->{
+            String navn = scene8NavnTF.getText();
+            int værdi = Integer.parseInt(scene8VaerdiTF.getText());
+            connection.opretLøntrin(navn, værdi);
+            primaryStage.setScene(scene2);
+            primaryStage.show();
+
+        });
 
         // SLUT l�ntrinoprettelseGUI (scene8)
 
@@ -653,7 +682,7 @@ public class CafeProgram extends Application
         scene9logUdKnap.setPrefSize(96, 32);
         scene9Hbox.setMargin(scene9logUdKnap, new Insets(16, 0, 0, 0));
 
-        ComboBox scene9LoentrinCB = new ComboBox();
+        ComboBox scene9LøntrinCB = new ComboBox();
 
         TextField scene9VaerdiTF = new TextField();
         scene9VaerdiTF.setPromptText("Indtast v\u00E6rdi");
@@ -664,19 +693,19 @@ public class CafeProgram extends Application
         Button scene9SletKnap = new Button("Slet L\u00F8ntrin");
         Button scene9GodkendKnap = new Button("Godkend Redigering");
 
-        scene9LoentrinCB.setPrefSize(192, 32);
+        scene9LøntrinCB.setPrefSize(192, 32);
         scene9VaerdiTF.setPrefSize(192, 32);
         scene9NavnTF.setPrefSize(192, 32);
         scene9RedigerKnap.setPrefSize(128, 32);
         scene9SletKnap.setPrefSize(128, 32);
         scene9GodkendKnap.setPrefSize(192, 32);
 
-        scene9Hbox2.setMargin(scene9LoentrinCB, new Insets(64, 0, 0, 0));
+        scene9Hbox2.setMargin(scene9LøntrinCB, new Insets(64, 0, 0, 0));
         scene9Hbox2.setMargin(scene9RedigerKnap, new Insets(64, 0, 0, 0));
         scene9Hbox2.setMargin(scene9SletKnap, new Insets(64, 0, 0, 0));
 
         scene9Hbox.getChildren().addAll(scene9tilbageKnap, scene9logUdKnap);
-        scene9Hbox2.getChildren().addAll(scene9LoentrinCB, scene9RedigerKnap, scene9SletKnap);
+        scene9Hbox2.getChildren().addAll(scene9LøntrinCB, scene9RedigerKnap, scene9SletKnap);
         scene9Hbox3.getChildren().addAll(scene9VaerdiTF, scene9NavnTF, scene9GodkendKnap);
 
 
@@ -694,22 +723,20 @@ public class CafeProgram extends Application
         scene9tilbageKnap.setOnAction((event) -> {
             primaryStage.setScene(scene2);
             primaryStage.show();
+});
 
-            if (!scene9VaerdiTF.getText().isEmpty() && scene9VaerdiTF.getText().length() < 5 && Pattern.matches("[0-9]+", scene9VaerdiTF.getText()))  {
-                if (!scene9NavnTF.getText().isEmpty() && scene9NavnTF.getText().length() < 21 && Pattern.matches("[\306\330\305\346\370\345\040a-zA-Z0-9]+", scene9NavnTF.getText())) {
 
-                    System.out.println("Tillykke, alle felter er godkendt til redigering af løntrin!");
-                    // Opret løntrin - det vil sige foretag et SQL statement der indsætter de forskellige felter direkte ind i databasen
-
-                } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Identifikationsnavn til løntrin indtastet forkert. Feltet må kun indeholde bogstaver, tal og mellemrum, og være maksimalt 20 karakterer lang."); }
-            } else { FejlMeddelelse.visFejlMeddelelse("Fejl: Værdien til løntrin indtastet forkert. Feltet må kun indeholde tal, og være maksimalt 4 cifre."); }
-        });
-
-        /*
         scene9logUdKnap.setOnAction((event) -> {
-            // Kald en logud funktion her.
+            primaryStage.setScene(scene1);
+            primaryStage.show();
+            loginNavnFelt.clear();
+            loginPasswordFelt.clear();
+            opretMedarbejderKnap.setDisable(false);
+            redigerMedarbejderKnap.setDisable(false);
+            opretLøntrinKnap.setDisable(false);
+            redigerLøntrinKnap.setDisable(false);
         });
-        */
+
         
         // SLUT løntrinredigeringGUI (scene9)
 
@@ -722,8 +749,8 @@ public class CafeProgram extends Application
             else if(login.validerLogin(loginNavnFelt.getText(), loginPasswordFelt.getText()) == 2){
                 opretMedarbejderKnap.setDisable(true);
                 redigerMedarbejderKnap.setDisable(true);
-                opretLoentrinKnap.setDisable(true);
-                redigerLoentrinKnap.setDisable(true);
+                opretLøntrinKnap.setDisable(true);
+                redigerLøntrinKnap.setDisable(true);
                 primaryStage.setScene(scene2);
                 primaryStage.show();
             }
@@ -744,8 +771,8 @@ public class CafeProgram extends Application
         loginPasswordFelt.clear();
         opretMedarbejderKnap.setDisable(false);
         redigerMedarbejderKnap.setDisable(false);
-        opretLoentrinKnap.setDisable(false);
-        redigerLoentrinKnap.setDisable(false);
+        opretLøntrinKnap.setDisable(false);
+        redigerLøntrinKnap.setDisable(false);
     }
     */
     }
